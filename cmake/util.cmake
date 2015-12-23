@@ -55,5 +55,6 @@ function(report_version name ver)
     endif()    
         
     message("- ${BoldYellow}${name} version ${ver}${ColourReset}")
+    #message("- ${name} version ${ver}")
     
 endfunction()  

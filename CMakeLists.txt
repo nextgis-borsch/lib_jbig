@@ -26,8 +26,7 @@
 
 cmake_minimum_required(VERSION 2.8.10 FATAL_ERROR)
 
-set(PROJECT_NAME "jbig")
-project(${PROJECT_NAME} C)
+project(jbig C)
 
 # some init settings
 set(CMAKE_COLOR_MAKEFILE ON)
