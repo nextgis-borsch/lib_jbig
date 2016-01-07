@@ -54,7 +54,6 @@ function(report_version name ver)
       set(ColourReset "${Esc}[m")
     endif()    
         
-    message("- ${BoldYellow}${name} version ${ver}${ColourReset}")
-    #message("- ${name} version ${ver}")
+    message(STATUS "${BoldYellow}${name} version ${ver}${ColourReset}")
     
 endfunction()  
