@@ -8,6 +8,16 @@
 #ifndef JBG_AR_H
 #define JBG_AR_H
 
+#ifdef _WIN32
+#    ifdef JBIG_DLL_EXPORTS
+#        define EXTERN extern __declspec(dllexport)
+#    else
+#        define EXTERN extern __declspec(dllimport)
+#    endif
+#else
+#    define EXTERN extern
+#endif
+
 /*
  * Status of arithmetic encoder
  */
@@ -44,10 +54,19 @@ struct jbg_ardec_state {
 			 * place */
 };
 
-void arith_encode_init(struct jbg_arenc_state *s, int reuse_st);
-void arith_encode_flush(struct jbg_arenc_state *s);
-void arith_encode(struct jbg_arenc_state *s, int cx, int pix);
-void arith_decode_init(struct jbg_ardec_state *s, int reuse_st);
-int  arith_decode(struct jbg_ardec_state *s, int cx);
+#ifdef __cplusplus
+extern "C" {  // only need to export C interface if
+    // used by C++ source code
+#endif
+
+EXTERN void arith_encode_init(struct jbg_arenc_state *s, int reuse_st);
+EXTERN void arith_encode_flush(struct jbg_arenc_state *s);
+EXTERN void arith_encode(struct jbg_arenc_state *s, int cx, int pix);
+EXTERN void arith_decode_init(struct jbg_ardec_state *s, int reuse_st);
+EXTERN int  arith_decode(struct jbg_ardec_state *s, int cx);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* JBG_AR_H */
