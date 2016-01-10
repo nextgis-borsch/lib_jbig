@@ -8,7 +8,7 @@
 #ifndef JBG_AR_H
 #define JBG_AR_H
 
-#ifdef _WIN32
+#if defined (_WIN32) || defined (WINDOWS)
 #    ifdef JBIG_DLL_EXPORTS
 #        define EXTERN extern __declspec(dllexport)
 #    else
