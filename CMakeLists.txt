@@ -78,6 +78,7 @@ else()
     set(LIB_NAME ${PROJECT_NAME}static)
     add_library(${LIB_NAME} STATIC ${SRCS} ${PUBLIC_HDRS})
     set_target_properties(${LIB_NAME} PROPERTIES SOVERSION 1)
+    set_target_properties(${LIB_NAME} PROPERTIES DEFINE_SYMBOL JBIG_STATIC)
 endif()   
 
 export(TARGETS ${LIB_NAME} FILE ${LIB_NAME}-exports.cmake)
