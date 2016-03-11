@@ -33,14 +33,14 @@ set(CMAKE_COLOR_MAKEFILE ON)
 # set path to additional CMake modules
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 
-set(INSTALL_BIN_DIR "${CMAKE_INSTALL_PREFIX}/bin" CACHE INTERNAL "Installation directory for executables" FORCE)
-set(INSTALL_LIB_DIR "${CMAKE_INSTALL_PREFIX}/lib" CACHE INTERNAL "Installation directory for libraries" FORCE)
-set(INSTALL_INC_DIR "${CMAKE_INSTALL_PREFIX}/include" CACHE INTERNAL "Installation directory for headers" FORCE)
-set(INSTALL_DOC_DIR "${CMAKE_INSTALL_PREFIX}/share/doc" CACHE INTERNAL "Share directory for data" FORCE)
+include(GNUInstallDirs)
+
+set(INSTALL_BIN_DIR ${CMAKE_INSTALL_BINDIR} CACHE INTERNAL "Installation directory for executables" FORCE)
+set(INSTALL_LIB_DIR ${CMAKE_INSTALL_LIBDIR} CACHE INTERNAL "Installation directory for libraries" FORCE)
+set(INSTALL_INC_DIR ${CMAKE_INSTALL_INCLUDEDIR} CACHE INTERNAL "Installation directory for headers" FORCE)
+set(INSTALL_DOC_DIR "${INSTALL_SHARE_DIR}/doc" CACHE INTERNAL "Share directory for data" FORCE)
 
 include(util)
-set(JBIG_MAJOR_VERSION -1)
-set(JBIG_MINOR_VERSION -1)
 check_version(JBIG_MAJOR_VERSION JBIG_MINOR_VERSION)
 set(VERSION ${JBIG_MAJOR_VERSION}.${JBIG_MINOR_VERSION})
 
