@@ -40,7 +40,7 @@ set(INSTALL_LIB_DIR ${CMAKE_INSTALL_LIBDIR} CACHE INTERNAL "Installation directo
 set(INSTALL_INC_DIR ${CMAKE_INSTALL_INCLUDEDIR} CACHE INTERNAL "Installation directory for headers" FORCE)
 set(INSTALL_DOC_DIR "${INSTALL_SHARE_DIR}/doc" CACHE INTERNAL "Share directory for data" FORCE)
 
-if(CMAKE_GENERATOR_TOOLSET MATCHES "*xp")
+if(CMAKE_GENERATOR_TOOLSET MATCHES "v([0-9]+)_xp")
     add_definitions(-D_WIN32_WINNT=0x0501)
 endif()
 
