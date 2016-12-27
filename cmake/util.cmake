@@ -39,9 +39,13 @@ function(check_version major minor)
       MINOR_VERSION ${VERSION_H_CONTENTS})
     string (REGEX MATCH "([0-9]+)"
       MINOR_VERSION ${MINOR_VERSION})
-    
+
     set(${major} ${MAJOR_VERSION} PARENT_SCOPE)
     set(${minor} ${MINOR_VERSION} PARENT_SCOPE)
+
+    # Store version string in file for installer needs
+    file(TIMESTAMP ${CMAKE_CURRENT_SOURCE_DIR}/jbig.h VERSION_DATETIME "%Y-%m-%d %H:%M:%S" UTC)
+    file(WRITE ${CMAKE_BINARY_DIR}/version.str "${MAJOR_VERSION}.${MINOR_VERSION}\n${VERSION_DATETIME}")
 
 endfunction(check_version)
 
@@ -51,7 +55,7 @@ function(report_version name ver)
     string(ASCII 27 Esc)
     set(BoldYellow  "${Esc}[1;33m")
     set(ColourReset "${Esc}[m")
-        
+
     message(STATUS "${BoldYellow}${name} version ${ver}${ColourReset}")
-    
-endfunction()  
+
+endfunction()
