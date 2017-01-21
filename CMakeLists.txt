@@ -118,9 +118,8 @@ else()
     #set_target_properties(${LIB_NAME} PROPERTIES DEFINE_SYMBOL JBIG_STATIC)
 endif()
 
-export(TARGETS ${LIB_NAME} FILE ${LIB_NAME}-exports.cmake)
-
 if (REGISTER_PACKAGE)
+    export(TARGETS ${LIB_NAME} FILE ${LIB_NAME}-exports.cmake)
 
     set(EXPORT_PACKAGE_NAME JBIG)
     set(EXPORT_PACKAGE_NAME_UPPER ${EXPORT_PACKAGE_NAME})
@@ -138,6 +137,8 @@ if (REGISTER_PACKAGE)
         ${CMAKE_CURRENT_BINARY_DIR}/${EXPORT_PACKAGE_NAME}ConfigVersion.cmake
         VERSION ${VERSION}
         COMPATIBILITY AnyNewerVersion )
+else()
+    export(TARGETS ${LIB_NAME} FILE ${LIB_NAME}-exports.cmake EXPORT_LINK_INTERFACE_LIBRARIES)
 endif()
 
 add_custom_target(uninstall COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
