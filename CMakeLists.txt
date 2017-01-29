@@ -3,7 +3,7 @@
 # Purpose:  CMake build scripts
 # Author:   Dmitry Baryshnikov, dmitry.baryshnikov@nexgis.com
 ################################################################################
-# Copyright (C) 2015, NextGIS <info@nextgis.com>
+# Copyright (C) 2015, 2017, NextGIS <info@nextgis.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -67,6 +67,7 @@ set(VERSION ${JBIG_MAJOR_VERSION}.${JBIG_MINOR_VERSION})
 if(OSX_FRAMEWORK)
     set(FRAMEWORK_VERSION "${JBIG_MAJOR_VERSION}")
 endif()
+report_version(${PROJECT_NAME} ${VERSION})
 
 configure_file(${CMAKE_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake IMMEDIATE @ONLY)
 
@@ -90,8 +91,6 @@ set(SRCS
     jbig_ar.c
 )
 
-report_version(${PROJECT_NAME} ${VERSION})
-
 if(UNIX)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O -W -Wall -ansi -pedantic")
 endif()
@@ -99,8 +98,10 @@ endif()
 set(LIB_NAME ${PROJECT_NAME})
 if(BUILD_SHARED_LIBS)
     add_library(${LIB_NAME} SHARED ${SRCS} ${PUBLIC_HDRS})
-    set_target_properties(${LIB_NAME} PROPERTIES SOVERSION 1)
-    set_target_properties(${LIB_NAME} PROPERTIES DEFINE_SYMBOL JBIG_DLL_EXPORTS)
+    set_target_properties (${LIB_NAME} PROPERTIES
+        VERSION ${LIB_VERSION}
+        SOVERSION ${JBIG_MAJOR_VERSION}
+        DEFINE_SYMBOL JBIG_DLL_EXPORTS)
 elseif(OSX_FRAMEWORK)
     add_library(${LIB_NAME} SHARED ${SRCS} ${PUBLIC_HDRS})
     set_target_properties(${LIB_NAME} PROPERTIES
@@ -110,11 +111,13 @@ elseif(OSX_FRAMEWORK)
       MACOSX_FRAMEWORK_BUNDLE_VERSION ${VERSION}
       MACOSX_FRAMEWORK_IDENTIFIER org.liblzma.liblzma
       XCODE_ATTRIBUTE_INSTALL_PATH "@rpath"
-      PUBLIC_HEADER "${PUBLIC_HDRS}")
+      PUBLIC_HEADER "${PUBLIC_HDRS}"
+      VERSION ${LIB_VERSION}
+      SOVERSION ${JBIG_MAJOR_VERSION}
+      )
 else()
     add_definitions(-DJBIG_STATIC)
     add_library(${LIB_NAME} STATIC ${SRCS} ${PUBLIC_HDRS})
-    set_target_properties(${LIB_NAME} PROPERTIES SOVERSION 1)
     #set_target_properties(${LIB_NAME} PROPERTIES DEFINE_SYMBOL JBIG_STATIC)
 endif()
 
