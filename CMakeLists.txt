@@ -103,6 +103,8 @@ set(SRCS
 
 if(UNIX)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O -W -Wall -ansi -pedantic")
+elseif(WIN32)
+    set(SRCS ${SRCS} libjbig/jbig.def)
 endif()
 
 set(LIB_NAME ${PROJECT_NAME})
