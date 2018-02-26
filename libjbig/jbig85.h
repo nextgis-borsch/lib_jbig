@@ -134,37 +134,29 @@ struct jbg85_dec_state {
 
 
 /* function prototypes */
-#ifdef __cplusplus
-extern "C" {  // only need to export C interface if
-    // used by C++ source code
-#endif
 
-EXTERN void jbg85_enc_init(struct jbg85_enc_state *s,
+void jbg85_enc_init(struct jbg85_enc_state *s,
 		    unsigned long x0, unsigned long y0,
 		    void (*data_out)(unsigned char *start, size_t len,
 				     void *file),
 		    void *file);
-EXTERN void jbg85_enc_options(struct jbg85_enc_state *s, int options,
+void jbg85_enc_options(struct jbg85_enc_state *s, int options,
 		       unsigned long l0, int mx);
-EXTERN void jbg85_enc_lineout(struct jbg85_enc_state *s, unsigned char *line,
+void jbg85_enc_lineout(struct jbg85_enc_state *s, unsigned char *line,
 		       unsigned char *prevline, unsigned char *prevprevline);
-EXTERN void jbg85_enc_newlen(struct jbg85_enc_state *s, unsigned long y0);
-EXTERN void jbg85_enc_abort(struct jbg85_enc_state *s);
+void jbg85_enc_newlen(struct jbg85_enc_state *s, unsigned long y0);
+void jbg85_enc_abort(struct jbg85_enc_state *s);
 
-EXTERN void jbg85_dec_init(struct jbg85_dec_state *s,
+void jbg85_dec_init(struct jbg85_dec_state *s,
 		    unsigned char *buf, size_t buflen,
 		    int (*line_out)(const struct jbg85_dec_state *s,
 				    unsigned char *start, size_t len,
 				    unsigned long y, void *file),
 		    void *file);
-EXTERN int  jbg85_dec_in(struct jbg85_dec_state *s, unsigned char *data, size_t len,
+int  jbg85_dec_in(struct jbg85_dec_state *s, unsigned char *data, size_t len,
 		  size_t *cnt);
-EXTERN int  jbg85_dec_end(struct jbg85_dec_state *s);
-EXTERN const char *jbg85_strerror(int errnum);
-
-#ifdef __cplusplus
-}
-#endif
+int  jbg85_dec_end(struct jbg85_dec_state *s);
+const char *jbg85_strerror(int errnum);
 
 /* some macros for examining decoder state */
 

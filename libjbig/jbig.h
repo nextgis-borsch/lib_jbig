@@ -188,54 +188,46 @@ struct jbg_dec_state {
 
 #define jbg_dec_getplanes(s)     ((s)->planes)
 
-#ifdef __cplusplus
-extern "C" {  // only need to export C interface if
-              // used by C++ source code
-#endif
 
 /* function prototypes */
 
-EXTERN void jbg_enc_init(struct jbg_enc_state *s, unsigned long x, unsigned long y,
+void jbg_enc_init(struct jbg_enc_state *s, unsigned long x, unsigned long y,
 		  int planes, unsigned char **p,
 		  void (*data_out)(unsigned char *start, size_t len,
 				   void *file),
 		  void *file);
-EXTERN int jbg_enc_lrlmax(struct jbg_enc_state *s, unsigned long mwidth,
+int jbg_enc_lrlmax(struct jbg_enc_state *s, unsigned long mwidth,
 		   unsigned long mheight);
-EXTERN void jbg_enc_layers(struct jbg_enc_state *s, int d);
-EXTERN int  jbg_enc_lrange(struct jbg_enc_state *s, int dl, int dh);
-EXTERN void jbg_enc_options(struct jbg_enc_state *s, int order, int options,
+void jbg_enc_layers(struct jbg_enc_state *s, int d);
+int  jbg_enc_lrange(struct jbg_enc_state *s, int dl, int dh);
+void jbg_enc_options(struct jbg_enc_state *s, int order, int options,
 		     unsigned long l0, int mx, int my);
-EXTERN void jbg_enc_out(struct jbg_enc_state *s);
-EXTERN void jbg_enc_free(struct jbg_enc_state *s);
+void jbg_enc_out(struct jbg_enc_state *s);
+void jbg_enc_free(struct jbg_enc_state *s);
 
-EXTERN void jbg_dec_init(struct jbg_dec_state *s);
-EXTERN void jbg_dec_maxsize(struct jbg_dec_state *s, unsigned long xmax,
+void jbg_dec_init(struct jbg_dec_state *s);
+void jbg_dec_maxsize(struct jbg_dec_state *s, unsigned long xmax,
 		     unsigned long ymax);
-EXTERN int  jbg_dec_in(struct jbg_dec_state *s, unsigned char *data, size_t len,
+int  jbg_dec_in(struct jbg_dec_state *s, unsigned char *data, size_t len,
 		size_t *cnt);
-EXTERN unsigned long jbg_dec_getwidth(const struct jbg_dec_state *s);
-EXTERN unsigned long jbg_dec_getheight(const struct jbg_dec_state *s);
-EXTERN unsigned char *jbg_dec_getimage(const struct jbg_dec_state *s, int plane);
-EXTERN unsigned long jbg_dec_getsize(const struct jbg_dec_state *s);
-EXTERN void jbg_dec_merge_planes(const struct jbg_dec_state *s, int use_graycode,
+unsigned long jbg_dec_getwidth(const struct jbg_dec_state *s);
+unsigned long jbg_dec_getheight(const struct jbg_dec_state *s);
+unsigned char *jbg_dec_getimage(const struct jbg_dec_state *s, int plane);
+unsigned long jbg_dec_getsize(const struct jbg_dec_state *s);
+void jbg_dec_merge_planes(const struct jbg_dec_state *s, int use_graycode,
 			  void (*data_out)(unsigned char *start, size_t len,
 					   void *file), void *file);
-EXTERN unsigned long jbg_dec_getsize_merged(const struct jbg_dec_state *s);
-EXTERN void jbg_dec_free(struct jbg_dec_state *s);
+unsigned long jbg_dec_getsize_merged(const struct jbg_dec_state *s);
+void jbg_dec_free(struct jbg_dec_state *s);
 
-EXTERN const char *jbg_strerror(int errnum);
-EXTERN void jbg_int2dppriv(unsigned char *dptable, const char *internal);
-EXTERN void jbg_dppriv2int(char *internal, const unsigned char *dptable);
-EXTERN unsigned long jbg_ceil_half(unsigned long x, int n);
-EXTERN void jbg_split_planes(unsigned long x, unsigned long y, int has_planes,
+const char *jbg_strerror(int errnum);
+void jbg_int2dppriv(unsigned char *dptable, const char *internal);
+void jbg_dppriv2int(char *internal, const unsigned char *dptable);
+unsigned long jbg_ceil_half(unsigned long x, int n);
+void jbg_split_planes(unsigned long x, unsigned long y, int has_planes,
 		      int encode_planes,
 		      const unsigned char *src, unsigned char **dest,
 		      int use_graycode);
-EXTERN int jbg_newlen(unsigned char *bie, size_t len);
-
-#ifdef __cplusplus
-}
-#endif
+int jbg_newlen(unsigned char *bie, size_t len);
 
 #endif /* JBG_H */
