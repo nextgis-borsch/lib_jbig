@@ -58,7 +58,7 @@ function(report_version name ver)
     set(BoldYellow  "${Esc}[1;33m")
     set(ColourReset "${Esc}[m")
 
-    message(STATUS "${BoldYellow}${name} version ${ver}${ColourReset}")
+    message("${BoldYellow}${name} version ${ver}${ColourReset}")
 
 endfunction()
 
@@ -69,11 +69,7 @@ function(get_cpack_filename ver name)
         set(STATIC_PREFIX "static-")
     endif()
 
-    if(BUILD_SHARED_LIBS OR OSX_FRAMEWORK)
-        set(${name} ${PROJECT_NAME}-${STATIC_PREFIX}${ver}-${COMPILER} PARENT_SCOPE)
-    else()
-        set(${name} ${PROJECT_NAME}-${STATIC_PREFIX}${ver}-STATIC-${COMPILER} PARENT_SCOPE)
-    endif()
+    set(${name} ${PROJECT_NAME}-${STATIC_PREFIX}${ver}-${COMPILER} PARENT_SCOPE)
 endfunction()
 
 function(get_compiler_version ver)
