@@ -62,14 +62,59 @@ function(report_version name ver)
 
 endfunction()
 
+# macro to find packages on the host OS
+macro( find_exthost_package )
+    if(CMAKE_CROSSCOMPILING)
+        set( CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER )
+        set( CMAKE_FIND_ROOT_PATH_MODE_LIBRARY NEVER )
+        set( CMAKE_FIND_ROOT_PATH_MODE_INCLUDE NEVER )
+
+        find_package( ${ARGN} )
+
+        set( CMAKE_FIND_ROOT_PATH_MODE_PROGRAM ONLY )
+        set( CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY )
+        set( CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY )
+    else()
+        find_package( ${ARGN} )
+    endif()
+endmacro()
+
+
+# macro to find programs on the host OS
+macro( find_exthost_program )
+    if(CMAKE_CROSSCOMPILING)
+        set( CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER )
+        set( CMAKE_FIND_ROOT_PATH_MODE_LIBRARY NEVER )
+        set( CMAKE_FIND_ROOT_PATH_MODE_INCLUDE NEVER )
+
+        find_program( ${ARGN} )
+
+        set( CMAKE_FIND_ROOT_PATH_MODE_PROGRAM ONLY )
+        set( CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY )
+        set( CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY )
+    else()
+        find_program( ${ARGN} )
+    endif()
+endmacro()
+
+function(get_prefix prefix)
+  if(BUILD_STATIC_LIBS)
+  set(STATIC_PREFIX "static-")
+    if(ANDROID)
+      set(STATIC_PREFIX "${STATIC_PREFIX}android-${ANDROID_ABI}-")
+    elseif(IOS)
+      set(STATIC_PREFIX "${STATIC_PREFIX}${IOS_PLATFORM}${IOS_ARCH}-${ANDROID_ABI}-")
+    endif()
+  endif()
+  set(${prefix} ${STATIC_PREFIX} PARENT_SCOPE)
+endfunction()
+
 
 function(get_cpack_filename ver name)
     get_compiler_version(COMPILER)
-    if(BUILD_STATIC_LIBS)
-        set(STATIC_PREFIX "static-")
-    endif()
+    get_prefix(STATIC_PREFIX)
 
-    set(${name} ${PROJECT_NAME}-${STATIC_PREFIX}${ver}-${COMPILER} PARENT_SCOPE)
+    set(${name} ${PACKAGE_NAME}-${ver}-${STATIC_PREFIX}${COMPILER} PARENT_SCOPE)
 endfunction()
 
 function(get_compiler_version ver)
